@@ -1,0 +1,15 @@
+numpy
+pandas
+matplotlib
+scikit-learn
+tensorflow
+keras
+opencv-python
+torch
+torchvision
+tqdm
+seaborn
+scipy
+Pillow
+h5py
+# Add any other dependencies specific to your project
