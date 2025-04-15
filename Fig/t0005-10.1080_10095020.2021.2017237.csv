@@ -1,0 +1,7 @@
+"Method","input shape","Parameters (M)","Complexity (G)"
+"SegNet","3 × 256 × 256","1.93","9.27"
+"Tiramisu","29.45","40.29"
+"U-Net","1.38","11.92"
+"U-NetAtt","2.17","12.75"
+"FGC","2.19","8.4"
+"MSFCN","2.67","9.66"
