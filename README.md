@@ -5,7 +5,7 @@ In this repository, we design two branches with convolutional layers in differen
 
 The detailed results can be seen in the [Land Cover Classification from Remote Sensing Images Based on Multi-Scale Fully Convolutional Network](https://www.tandfonline.com/doi/full/10.1080/10095020.2021.2017237).
 
-The training and testing code can refer to [GeoSeg](https://github.com/WangLibo1995/GeoSeg).
+The training and testing code can refer to [GeoSeg](https://github.com/rajesh0305/GeoSeg).
 
 The related repositories include:
 * [MACU-Net](https://github.com/lironui/MACU-Net)->A revised U-Net structure.
