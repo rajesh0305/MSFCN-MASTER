@@ -47,3 +47,8 @@ Fig. 2. Visualization of results on the WHDLD and GID datasets.
 
 ![Result2](https://github.com/lironui/MSFCN/blob/master/Fig/3D_zoom.png)  
 Fig. 3. Visualization of results on the 2015 and 2017 datasets.
+
+Performence Metrics:
+-------
+![Performrnce Metrics](https://github.com/rajesh0305/MSFCN_Results/blob/main/whdld%20result.png)
+Fig. 4. Performence Metrices of the proposed MSFCN on the WHDLD Dataset.
