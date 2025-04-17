@@ -37,7 +37,7 @@ imageio >= 2.8.0
 
 Network:
 ------- 
-![network](https://github.com/lironui/MSFCN/blob/master/Fig/network.png)  
+![network](https://github.com/rajesh0305/MSFCN_Results/blob/main/network.png)  
 Fig. 1.  The structure of the proposed Multi-Scale Fully Convolutional Network.
 
 Result:
