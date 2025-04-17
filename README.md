@@ -48,4 +48,10 @@ Fig. 2. Visualization of results on the WHDLD and GID datasets.
 Performence Metrics:
 -------
 ![Performrnce Metrics](https://github.com/rajesh0305/MSFCN_Results/blob/main/whdld%20result.png)
-Fig. 4. Performence Metrices of the proposed MSFCN on the WHDLD Dataset.
+Fig. 3. Performence Metrices of the proposed MSFCN on the WHDLD Dataset.
+
+Computational Complexity Analysis:
+-------
+![Computational Complexity Analysis](https://github.com/rajesh0305/MSFCN_Results/blob/main/computational%20complexity%20analysis.png)
+Fig. 4. Computational Complexity Analysis of the Proposed MSFCN
+and Other Methods on the WHDLD Dataset.
