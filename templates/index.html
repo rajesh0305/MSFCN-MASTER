@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Sensing Image Segmentation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Remote Sensing Image Segmentation</h1>
+            <div class="model-info">
+                <span>Model: MSFCN</span>
+                <span id="status">Status: Ready</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="upload-container">
+                    <input type="file" id="imageInput" accept="image/*" class="file-input">
+                    <label for="imageInput" class="upload-btn">
+                        Choose Image or Drag & Drop
+                    </label>
+                    <div id="dropZone" class="drop-zone">
+                        Drop image here
+                    </div>
+                </div>
+                
+                <div class="camera-container">
+                    <button id="startCamera" class="camera-btn">Start Camera</button>
+                    <video id="videoElement" autoplay playsinline></video>
+                    <button id="captureImage" class="capture-btn" disabled>Capture Image</button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div class="image-container">
+                    <h3>Original Image</h3>
+                    <img id="originalImage" src="" alt="Original image will appear here">
+                </div>
+                
+                <div class="image-container">
+                    <h3>Segmentation Result</h3>
+                    <img id="segmentedImage" src="" alt="Segmented image will appear here">
+                </div>
+            </div>
+
+            <div class="legend">
+                <h3>Class Legend</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="color-box" style="background-color: #FF0000"></span>
+                        <span>Urban</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-box" style="background-color: #00FF00"></span>
+                        <span>Vegetation</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-box" style="background-color: #0000FF"></span>
+                        <span>Water</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="color-box" style="background-color: #FFFF00"></span>
+                        <span>Bare Soil</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics">
+            <div class="metric-item">
+                <span>Processing Time:</span>
+                <span id="processingTime">0 ms</span>
+            </div>
+            <div class="metric-item">
+                <span>Confidence Score:</span>
+                <span id="confidenceScore">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let stream = null;
+
+        // File upload handling
+        const imageInput = document.getElementById('imageInput');
+        const dropZone = document.getElementById('dropZone');
+        const originalImage = document.getElementById('originalImage');
+        const segmentedImage = document.getElementById('segmentedImage');
+        const startCamera = document.getElementById('startCamera');
+        const videoElement = document.getElementById('videoElement');
+        const captureImage = document.getElementById('captureImage');
+        const status = document.getElementById('status');
+
+        // Drag and drop functionality
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                processImage(file);
+            }
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                processImage(file);
+            }
+        });
+
+        // Camera handling
+        startCamera.addEventListener('click', async () => {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videoElement.srcObject = stream;
+                captureImage.disabled = false;
+                startCamera.textContent = 'Stop Camera';
+                startCamera.classList.add('active');
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+            }
+        });
+
+        captureImage.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+            canvas.getContext('2d').drawImage(videoElement, 0, 0);
+            canvas.toBlob((blob) => {
+                processImage(blob);
+            }, 'image/jpeg');
+        });
+
+        function processImage(file) {
+            status.textContent = 'Status: Processing...';
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                originalImage.src = e.target.result;
+                socket.emit('process_image', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Socket.io event handling
+        socket.on('segmentation_result', (data) => {
+            segmentedImage.src = data.image;
+            document.getElementById('processingTime').textContent = `${data.processing_time} ms`;
+            document.getElementById('confidenceScore').textContent = `${data.confidence}%`;
+            status.textContent = 'Status: Ready';
+        });
+    </script>
+</body>
+</html>
