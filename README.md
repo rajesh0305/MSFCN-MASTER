@@ -42,11 +42,8 @@ Fig. 1.  The structure of the proposed Multi-Scale Fully Convolutional Network.
 
 Result:
 ------- 
-![Result1](https://github.com/lironui/MSFCN/blob/master/Fig/2D_zoom.png)  
+![Result1](https://github.com/rajesh0305/MSFCN_Results/blob/main/2D_zoom%20(1).png)  
 Fig. 2. Visualization of results on the WHDLD and GID datasets.
-
-![Result2](https://github.com/lironui/MSFCN/blob/master/Fig/3D_zoom.png)  
-Fig. 3. Visualization of results on the 2015 and 2017 datasets.
 
 Performence Metrics:
 -------
