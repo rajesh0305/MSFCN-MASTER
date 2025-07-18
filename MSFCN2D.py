@@ -94,9 +94,9 @@ class CMA2D(nn.Module):
         return x2
 
 
-class MSFCN2D(nn.Module):
+class EasyNetPP(nn.Module):
     def __init__(self, time_num, band_num, class_num):
-        super(MSFCN2D, self).__init__()
+        super(EasyNetPP, self).__init__()
         self.band_num = time_num * band_num
         self.class_num = class_num
         self.name = 'MSFCN2D'
@@ -185,5 +185,5 @@ if __name__ == '__main__':
     band_num = 4
     class_num = 4
     x = torch.randn(batch_size, time_num * band_num, height, weight).cuda()
-    model = MSFCN2D(time_num, band_num, class_num).cuda()
+    model = EasyNetPP(time_num, band_num, class_num).cuda()
     y = model(x)
